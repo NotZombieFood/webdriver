@@ -11,13 +11,13 @@ class Chrome:
         options.add_argument("--disable-extensions") # No extensiones
         # Pass the argument 1 to allow and 2 to block
         options.add_experimental_option("prefs", { 
-            "profile.default_content_setting_values.notifications": 1 
+            "profile.default_content_setting_values.notifications": 2 # Vuelve a desactivar notificaciones, por si las dudas 
         })
         options.add_argument("window-size=1400,600")
         if headless:
             options.add_argument("--headless")
         # Para instalar el webdriver se tiene que ir a esta pagina: https://chromedriver.storage.googleapis.com/index.html?path=92.0.4515.107/
-        self.driver = webdriver.Chrome(chrome_options=options, executable_path=r'C:\webdriver\chromedriver.exe') 
+        self.driver = webdriver.Chrome(chrome_options=options, executable_path=r'C:\webdriver\chromedriver.exe')  # esta linea se tiene que cambiar, esta es hardcoded pero lo ideal es quitar el exec path y ponerla como variable de ambiente
 
     def clean_up(self):
         """
@@ -31,10 +31,10 @@ def download_cute_dogs():
     website = "https://www.reddit.com/r/Awww/" # Este es sincrono, entoncees espera al loading
     browser = Chrome()
     browser.clean_up()
-    browser.driver.get(website)
-    browser.driver.fullscreen_window()
+    browser.driver.get(website) # cargar la pagina
+    browser.driver.fullscreen_window() # poner el browser en pantalla completa, está fancy para no batallar con el tamaño 
     top_button = browser.driver.find_element_by_link_text("Top") # Va a buscar cualquier link que tenga la palabra top
-    top_button.click()
+    top_button.click() 
     browser.driver.implicitly_wait(2) # Agregar un delay para poder esperar a que cargue (es super util para hacer search y que espere un poco m[as si no encuentra nada)
     sort_picker = browser.driver.find_element_by_id("TimeSort--SortPicker") # usandi el id del elemento de html
     sort_picker.click() # lo clickeamos
